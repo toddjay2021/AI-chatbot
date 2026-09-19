@@ -1,0 +1,377 @@
+{
+  "groups": [
+    {
+      "name": "langchain4j.ollama",
+      "type": "dev.langchain4j.ollama.spring.Properties",
+      "sourceType": "dev.langchain4j.ollama.spring.Properties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model",
+      "type": "dev.langchain4j.ollama.spring.ChatModelProperties",
+      "sourceType": "dev.langchain4j.ollama.spring.Properties",
+      "sourceMethod": "getChatModel()"
+    },
+    {
+      "name": "langchain4j.ollama.embedding-model",
+      "type": "dev.langchain4j.ollama.spring.EmbeddingModelProperties",
+      "sourceType": "dev.langchain4j.ollama.spring.Properties",
+      "sourceMethod": "getEmbeddingModel()"
+    },
+    {
+      "name": "langchain4j.ollama.language-model",
+      "type": "dev.langchain4j.ollama.spring.LanguageModelProperties",
+      "sourceType": "dev.langchain4j.ollama.spring.Properties",
+      "sourceMethod": "getLanguageModel()"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model",
+      "type": "dev.langchain4j.ollama.spring.ChatModelProperties",
+      "sourceType": "dev.langchain4j.ollama.spring.Properties",
+      "sourceMethod": "getStreamingChatModel()"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model",
+      "type": "dev.langchain4j.ollama.spring.LanguageModelProperties",
+      "sourceType": "dev.langchain4j.ollama.spring.Properties",
+      "sourceMethod": "getStreamingLanguageModel()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "langchain4j.ollama.chat-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.format",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.num-predict",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.repeat-penalty",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.seed",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.stop",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.temperature",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.top-k",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.chat-model.top-p",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.embedding-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.embedding-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.ollama.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.embedding-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.ollama.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.embedding-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.ollama.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.embedding-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.embedding-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.embedding-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.ollama.spring.EmbeddingModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.format",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.num-predict",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.repeat-penalty",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.seed",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.stop",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.temperature",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.top-k",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.language-model.top-p",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.format",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.num-predict",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.repeat-penalty",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.seed",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.stop",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.temperature",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.top-k",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-chat-model.top-p",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.ChatModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.custom-headers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.format",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.log-requests",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.log-responses",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.num-predict",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.repeat-penalty",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.seed",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.stop",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.temperature",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.timeout",
+      "type": "java.time.Duration",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.top-k",
+      "type": "java.lang.Integer",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    },
+    {
+      "name": "langchain4j.ollama.streaming-language-model.top-p",
+      "type": "java.lang.Double",
+      "sourceType": "dev.langchain4j.ollama.spring.LanguageModelProperties"
+    }
+  ],
+  "hints": []
+}

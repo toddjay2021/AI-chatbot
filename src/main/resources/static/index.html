@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>SSE 流式多轮对话</title>
+    <style>
+        * {box-sizing: border-box;}
+        body {max-width:900px;margin:20px auto;padding:0 10px;font-family:system-ui}
+        #chat-box {height:550px;overflow-y:auto;border:1px solid #ddd;padding:16px;border-radius:8px;margin-bottom:12px;background:#fafafa;}
+        .msg {margin:10px 0;white-space:pre-wrap;}
+        .user {text-align:right;}
+        .user .bubble {display:inline-block;background:#2563eb;color:white;padding:10px 14px;border-radius:12px;max-width:75%;}
+        .ai {text-align:left;}
+        .ai .bubble {display:inline-block;background:#ffffff;border:1px solid #e5e7eb;padding:10px 14px;border-radius:12px;max-width:75%;}
+        .input-area {display:flex;gap:8px;}
+        #input {flex:1;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:16px;}
+        button {padding:10px 16px;border:none;border-radius:8px;background:#2563eb;color:white;cursor:pointer;}
+        button#clear {background:#666;}
+    </style>
+</head>
+<body>
+<h2>Ollama SSE 多轮对话（无RAG）</h2>
+<div id="chat-box"></div>
+<div class="input-area">
+    <textarea id="input" placeholder="Type your message... Enter to send, Shift+Enter new line"></textarea>
+    <button onclick="send()">发送</button>
+    <button id="clear" onclick="clearChat()">清空对话</button>
+</div>
+
+<script>
+    const chatBox = document.getElementById('chat-box');
+    const input = document.getElementById('input');
+    // Enter 发送，Shift+Enter 换行
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault(); // 阻止 Enter 默认的换行行为
+            send();
+        }
+    });
+    // 生成唯一会话ID，页面刷新重置（按F5才会刷新重置，不是点按钮"清空对话“）
+    const sessionId = crypto.randomUUID();
+
+    async function send() {
+        const text = input.value.trim();
+        if (!text) return;
+        addMessage("user", text);
+        input.value = "";
+
+        // 创建AI消息气泡
+        const aiBubbleWrapper = addMessage("ai", "");
+        let fullText = "";
+        let pending = "";   // 待渲染的文本队列
+
+        // 打字机效果：每次按积压量自适应吐字，积压越多吐得越快，保证观感平滑
+        (function typeNext() {
+            if (pending.length > 0) {
+                const step = Math.max(1, Math.ceil(pending.length / 20)); // 每次吐 1~N 个字符
+                fullText += pending.slice(0, step);
+                pending = pending.slice(step);
+                aiBubbleWrapper.querySelector(".bubble").innerText = fullText;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+            //如果想让吐字节奏更快或更慢，调整 setTimeout 的 20（毫秒）即可
+            setTimeout(typeNext, 100);
+        })();
+
+        const response = await fetch("/api/stream-chat/ask", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({sessionId, message:text})
+        });
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        while(true) {
+            const {done, value} = await reader.read();
+            if(done) break;
+            // stream:true 避免多字节字符被网络分块截断导致乱码
+            buffer += decoder.decode(value, {stream:true});
+            const lines = buffer.split("\n");
+            buffer = lines.pop(); // 最后一段可能是不完整的行，留到下一轮
+
+            for (const line of lines) {
+                // SSE 格式为 "data:内容"，冒号后即是 token 原文（含必要的空格），放入打字机队列
+                if (line.startsWith("data:")) {
+                    pending += line.slice(5);
+                }
+            }
+        }
+    }
+
+    function addMessage(role, content) {
+        const div = document.createElement('div');
+        div.className = `msg ${role}`;
+        div.innerHTML = `<div class="bubble">${content}</div>`;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        return div;
+    }
+
+    async function clearChat() {
+        await fetch(`/api/stream-chat/clear/${sessionId}`, {method:"POST"});
+        chatBox.innerHTML = "";
+    }
+</script>
+</body>
+</html>
