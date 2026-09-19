@@ -15,6 +15,7 @@
         .input-area {display:flex;gap:8px;}
         #input {flex:1;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:16px;}
         button {padding:10px 16px;border:none;border-radius:8px;background:#2563eb;color:white;cursor:pointer;}
+        .typing {color:#999;}
         button#clear {background:#666;}
     </style>
 </head>
@@ -46,8 +47,15 @@
         addMessage("user", text);
         input.value = "";
 
-        // 创建AI消息气泡
-        const aiBubbleWrapper = addMessage("ai", "typing...");
+        // 创建AI消息气泡，等待期间显示灰色的动态 typing...
+        const aiBubble = addMessage("ai", "typing").querySelector(".bubble");
+        aiBubble.classList.add("typing");
+        let dotCount = 0;
+        const dotTimer = setInterval(() => {
+            dotCount = (dotCount + 1) % 4; // 循环显示 typing / typing. / typing.. / typing...
+            aiBubble.innerText = "typing" + ".".repeat(dotCount);
+        }, 400);
+        let started = false; // 是否已收到首个token
         let fullText = "";
         let pending = "";   // 待渲染的文本队列
 
@@ -57,37 +65,52 @@
                 const step = Math.max(1, Math.ceil(pending.length / 20)); // 每次吐 1~N 个字符
                 fullText += pending.slice(0, step);
                 pending = pending.slice(step);
-                aiBubbleWrapper.querySelector(".bubble").innerText = fullText;
+                aiBubble.innerText = fullText;
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
             //如果想让吐字节奏更快或更慢，调整 setTimeout 的 20（毫秒）即可
             setTimeout(typeNext, 100);
         })();
 
-        const response = await fetch("/api/stream-chat/ask", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({sessionId, message:text})
-        });
+        try {
+            const response = await fetch("/api/stream-chat/ask", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({sessionId, message:text})
+            });
+            if (!response.ok) throw new Error("HTTP " + response.status);
 
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = "";
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = "";
 
-        while(true) {
-            const {done, value} = await reader.read();
-            if(done) break;
-            // stream:true 避免多字节字符被网络分块截断导致乱码
-            buffer += decoder.decode(value, {stream:true});
-            const lines = buffer.split("\n");
-            buffer = lines.pop(); // 最后一段可能是不完整的行，留到下一轮
+            while(true) {
+                const {done, value} = await reader.read();
+                if(done) break;
+                // stream:true 避免多字节字符被网络分块截断导致乱码
+                buffer += decoder.decode(value, {stream:true});
+                const lines = buffer.split("\n");
+                buffer = lines.pop(); // 最后一段可能是不完整的行，留到下一轮
 
-            for (const line of lines) {
-                // SSE 格式为 "data:内容"，冒号后即是 token 原文（含必要的空格），放入打字机队列
-                if (line.startsWith("data:")) {
-                    pending += line.slice(5);
+                for (const line of lines) {
+                    // SSE 格式为 "data:内容"，冒号后即是 token 原文（含必要的空格），放入打字机队列
+                    if (line.startsWith("data:")) {
+                        if (!started) {
+                            started = true;
+                            clearInterval(dotTimer); // 首个token到达，停止 typing 动画
+                            aiBubble.classList.remove("typing"); // 恢复正常颜色
+                        }
+                        pending += line.slice(5);
+                    }
                 }
             }
+        } catch (err) {
+            // 请求失败：停止动画并给出错误提示
+            clearInterval(dotTimer);
+            aiBubble.classList.remove("typing");
+            aiBubble.innerText = started
+                ? fullText + "\n[输出中断：" + err.message + "]"
+                : "请求失败：" + err.message + "（请检查后端服务与 Ollama 是否正在运行）";
         }
     }
 
